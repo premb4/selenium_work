@@ -1,0 +1,78 @@
+package excelExportAndFileIO;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+
+public class ReadGuru99ExcelFile {
+static	String url;
+	
+public static void getUrl() throws EncryptedDocumentException, InvalidFormatException, IOException{		
+		
+		FileInputStream fis=new FileInputStream("C:/url.xlsx"); //18
+		Workbook wb=WorkbookFactory.create(fis);
+		Sheet sh = wb.getSheet("Sheet1");
+		
+		int rowNum = sh.getLastRowNum();				
+				for (int i = 0; i<=rowNum; i++){
+					Row row=sh.getRow(i);
+					Cell cell=row.getCell(0);
+					
+					String cellval=cell.getStringCellValue();//.getNumericCellValue()
+				   System.out.println(cellval);
+				   url = cellval; 
+				}
+			}
+
+	public static void main(String[] args) throws EncryptedDocumentException, InvalidFormatException, IOException{
+		
+//		/*FOR FIREFOX*/
+		WebDriver driver = new FirefoxDriver();				
+		driver.manage().timeouts().implicitlyWait(1,TimeUnit.MINUTES);			
+		ReadGuru99ExcelFile.getUrl();	
+		
+	        driver.get(url);
+		        
+		        
+		        
+		
+		
+	/*	
+		FileInputStream fis=new FileInputStream("C:/Data.xlsx"); //8
+		Workbook wb=WorkbookFactory.create(fis);
+		
+		Sheet sh = wb.getSheet("Sheet1");
+		
+		int rowNum = sh.getLastRowNum();
+		
+		for (int i = 0; i<=rowNum; i++){
+			Row row=sh.getRow(i);
+			Cell cell=row.getCell(0);
+			
+			double cellval=cell.getNumericCellValue();
+			System.out.println(cellval);
+		}
+		
+		
+		//System.out.println(cell);
+		
+		
+		
+		ReadGuru99ExcelFile.getUrl();*/
+	}
+	
+
+	
+	}
